@@ -9,6 +9,13 @@
   margin: 0 auto;
   max-width: 64 rem;
 }
+
+
+.container.narrow {
+    max-width: 56rem;
+}
+
+
 /* Medium and small screens (640px) */
  @media (min-width: 640px){
    html{ font-size: 112%; }
@@ -57,9 +64,6 @@ body {
 .navbar .logo {
   position: relative; /* positioning will be explain in a resource */
   left: 2rem;
-<<<<<<< HEAD
-  cursor: pointer;
-=======
   cursor: pointer;  /* produces the finger-pointer icon when you hover over the logo */
 }
 
