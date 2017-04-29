@@ -29,6 +29,22 @@ var albumMarconi = {
 };
 
 
+var albumAnjunaBeats = {
+  title: 'AnjunaBeats WorldWide 06',
+  artist: 'Jaosn Ross',
+  label: 'AnjunaBeats',
+  year: '2017',
+  albumArtUrl: 'assets/images/album_covers/21.png',
+  songs: [
+      { title: 'Begin Again', duration: '1:31' },
+      { title: 'You\'ll know', duration: '5:20' },
+      { title: 'Legacy', duration: '5:05'},
+      { title: 'SOS', duration: '5:34' },
+      { title: 'Universal', duration: '4:47'}
+  ]
+};
+
+
 var createSongRow = function(songNumber, songName, songLength){
   var template =
     '<tr class="album-view-song-item">'
@@ -56,7 +72,7 @@ var setCurrentAlbum = function(album)  {
   albumImage.setAttribute('src', album.albumArtUrl);
 
 
-  albumSongList.innerHTML = '';
+  albumSongList.innerHTML = ' ';
 
 
   for(var i=0; i<album.songs.length; i++){
@@ -67,4 +83,14 @@ var setCurrentAlbum = function(album)  {
 
 window.onload = function(){
   setCurrentAlbum(albumPicasso);
+
+  var albums = [albumPicasso, albumMarconi, albumAnjunaBeats];
+  var index = 1;
+  albumImage.addEventListener("click", function(event){
+    setCurrentAlbum(album[index]);
+    index++;
+    if(index == album.length){
+      index = 0;
+    }
+  });
 }
