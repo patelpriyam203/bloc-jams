@@ -5,11 +5,11 @@ var albumPicasso = {
     year: '1881',
     albumArtUrl: 'assets/images/album_covers/01.png',
     songs: [
-        { title: 'Blue', duration: '4:26' },
-        { title: 'Green', duration: '3:14' },
-        { title: 'Red', duration: '5:01' },
-        { title: 'Pink', duration: '3:21'},
-        { title: 'Magenta', duration: '2:15'}
+        { name: 'Blue', length: '4:26' },
+        { name: 'Green', length: '3:14' },
+        { name: 'Red', length: '5:01' },
+        { name: 'Pink', length: '3:21'},
+        { name: 'Magenta', length: '2:15'}
     ]
 };
 
@@ -20,11 +20,11 @@ var albumMarconi = {
     year: '1909',
     albumArtUrl: 'assets/images/album_covers/20.png',
     songs: [
-        { title: 'Hello, Operator?', duration: '1:01' },
-        { title: 'Ring, ring, ring', duration: '5:01' },
-        { title: 'Fits in your pocket', duration: '3:21'},
-        { title: 'Can you hear me now?', duration: '3:14' },
-        { title: 'Wrong phone number', duration: '2:15'}
+        { name: 'Hello, Operator?', length: '1:01' },
+        { name: 'Ring, ring, ring', length: '5:01' },
+        { name: 'Fits in your pocket', length: '3:21'},
+        { name: 'Can you hear me now?', length: '3:14' },
+        { name: 'Wrong phone number', length: '2:15'}
     ]
 };
 
@@ -36,11 +36,11 @@ var albumAnjunaBeats = {
   year: '2017',
   albumArtUrl: 'assets/images/album_covers/21.png',
   songs: [
-      { title: 'Begin Again', duration: '1:31' },
-      { title: 'You\'ll know', duration: '5:20' },
-      { title: 'Legacy', duration: '5:05'},
-      { title: 'SOS', duration: '5:34' },
-      { title: 'Universal', duration: '4:47'}
+      { name: 'Begin Again', length: '1:31' },
+      { name: 'You\'ll know', length: '5:20' },
+      { name: 'Legacy', length: '5:05'},
+      { name: 'SOS', length: '5:34' },
+      { name: 'Universal', length: '4:47'}
   ]
 };
 
@@ -57,39 +57,39 @@ var createSongRow = function(songNumber, songName, songLength){
       return template;
 };
 
+var albumTitle = document.getElementsByClassName('album-view-title')[0];
+var albumArtist = document.getElementsByClassName('album-view-artist')[0];
+var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
+var albumImage = document.getElementsByClassName('album-cover-art')[0];
+var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
+
 
 var setCurrentAlbum = function(album)  {
-  var albumTitle = document.getElementByClassName('album-view-title')[0];
-  var albumArtist = document.getElementByClassName('album-view-artist')[0];
-  var albumRealeaseInfo = document.getElementByClassName('album-view-release-info')[0];
-  var albumImage = document.getElementByClassName('album-cover-art')[0];
-  var albumSongList = document.getElementByClassName('album-view-song-list')[0];
 
-
-  albumTitle.firstChild.nodeValue = album.title;
+  albumTitle.firstChild.nodeValue = album.name;
   albumArtist.firstChild.nodeValue = album.artist;
   albumReleaseInfo.firstChild.nodeValue = album.year + ' ' + album.label;
   albumImage.setAttribute('src', album.albumArtUrl);
 
 
-  albumSongList.innerHTML = ' ';
+  albumSongList.innerHTML = '';
 
 
   for(var i=0; i<album.songs.length; i++){
-    albumSongList.innerHTML += createSongRow(i+1, album.songs[i].title, album.songs[i].duration);
+    albumSongList.innerHTML += createSongRow(i+1, album.songs[i].name, album.songs[i].length);
   }
 };
 
 
-window.onload = function(){
+window.onload = function() {
   setCurrentAlbum(albumPicasso);
 
   var albums = [albumPicasso, albumMarconi, albumAnjunaBeats];
   var index = 1;
   albumImage.addEventListener("click", function(event){
-    setCurrentAlbum(album[index]);
+    setCurrentAlbum(albums[index]);
     index++;
-    if(index == album.length){
+    if(index == albums.length){
       index = 0;
     }
   });
