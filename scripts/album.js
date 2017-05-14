@@ -1,3 +1,12 @@
+var setSong = function(songNumber){
+    currentlyPlayingSongNumber = parseInt(songNumber);
+    currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
+}
+
+var getSongNumberCell = function(number){
+    return $('.song-item-number[data-song-number="' + number + '"]');
+}
+
 var createSongRow = function(songNumber, songName, songLength){
   var template =
     '<tr class="album-view-song-item">'
@@ -21,7 +30,7 @@ var createSongRow = function(songNumber, songName, songLength){
 	        if (currentlyPlayingSongNumber !== songNumber) {
 		         // Switch from Play -> Pause button to indicate new song is playing.
 		         $(this).html(pauseButtonTemplate);
-		         currentlyPlayingSongNumber = songNumber;
+		         setSong(songNumber);
              currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
              updatePlayerBarSong();
 	        } else if (currentlyPlayingSongNumber === songNumber) {
@@ -118,7 +127,7 @@ var nextSong = function() {
     var lastSongNumber = currentlyPlayingSongNumber;
 
     // Set a new current song
-    currentlyPlayingSongNumber = currentSongIndex + 1;
+    setSong(currentSongIndex + 1);
     currentSongFromAlbum = currentAlbum.songs[currentSongIndex];
 
     // Update the Player Bar information
@@ -144,7 +153,7 @@ var previousSong = function() {
     var lastSongNumber = currentlyPlayingSongNumber;
 
     // Set a new current song
-    currentlyPlayingSongNumber = currentSongIndex + 1;
+    setSong(currentSongIndex + 1);
     currentSongFromAlbum = currentAlbum.songs[currentSongIndex];
 
     // Update the Player Bar information
