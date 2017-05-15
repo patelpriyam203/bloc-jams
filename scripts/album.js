@@ -39,7 +39,7 @@ var createSongRow = function(songNumber, songName, songLength){
     '<tr class="album-view-song-item">'
       + '<td class = "song-item-number" data-song-number="' +  songNumber + '">' +  songNumber + '</td>'
       + '<td class="song-item-title">' + songName + '</td>'
-      + '<td class="song-item-duration">' + songLength + '</td>'
+      + '<td class="song-item-duration">' + filterTimeCode(songLength) + '</td>'
       + '</tr>'
       ;
 
@@ -144,6 +144,35 @@ var setCurrentAlbum = function(album)  {
 };
 
 
+var setCurrentTimeInPlayerBar = function(currentTime) {
+    var $currentTimeElement = $('.seek-control .current-time');
+    $currentTimeElement.text(currentTime);
+};
+
+
+var setTotalTimeInPlayerBar = function(totalTime) {
+    var $totalTimeElement = $('.seek-control .total-time');
+    $totalTimeElement.text(totalTime);
+};
+
+
+var filterTimeCode = function(timeInSeconds) {
+    var seconds = Number.parseFloat(timeInSeconds);
+    var wholeSeconds = Math.floor(seconds);
+    var wholeMinutes = Math.floor(wholeSeconds / 60);
+    var remainderSeconds = wholeSeconds % 60;
+    var formatSeconds = wholeMinutes + ":";
+
+    if(remainderSeconds < 10) {
+        formatSeconds = formatSeconds + '0';
+    }
+
+    formatSeconds = formatSeconds + remainderSeconds;
+    return formatSeconds;
+
+};
+
+
 var updateSeekBarWhileSongPlays = function() {
     if (currentSoundFile) {
         currentSoundFile.bind('timeupdate', function(event) {
@@ -151,6 +180,7 @@ var updateSeekBarWhileSongPlays = function() {
             var $seekBar = $('.seek-control .seek-bar');
 
             updateSeekPercentage($seekBar, seekBarFillRatio);
+            setCurrentTimeInPlayerBar(filterTimeCode(currentTime));
         });
     }
 };
@@ -215,6 +245,8 @@ var updatePlayerBarSong = function() {
     $('.currently-playing .song-name').text(currentSongFromAlbum.title);
     $('.currently-playing .artist-name').text(currentAlbum.artist);
     $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.artist);
+
+    setTotalTimeInPlayerBar(filterTimeCode(currentSongFromAlbum.length));
 
 };
 
